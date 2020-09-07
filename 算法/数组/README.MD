@@ -2,7 +2,7 @@
 
 - [数组](#数组)
     - [1.形成两个异或相等数组的三元组数目](#1形成两个异或相等数组的三元组数目)
-        - [方法1：O(N^2)](#方法1on^2)
+        - [方法1：O(N**2)](#方法1on2)
         - [方法2：O(N)](#方法2on)
 
 <!-- /TOC -->
@@ -15,7 +15,7 @@
 ## 1.形成两个异或相等数组的三元组数目
 直通车：[https://leetcode-cn.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/](https://leetcode-cn.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/)
 
-### 方法1：O(N^2)
+### 方法1：O(N**2)
 > 分析：a = arr[i] ^ arr[i + 1] ^ ... ^ arr[j - 1]，b = arr[j] ^ arr[j + 1] ^ ... ^ arr[k]，要找到a==b成立的三元组(i,j,k)，根据异或结合律,a==b等同于a^b=0，即arr[i] ^ arr[i + 1] ^ ... ^ arr[j - 1]^arr[j] ^ arr[j + 1] ^ ... ^ arr[k] = 0，也就是再i和k之间找到长度大于等于2的子数组，将这个字数组拆分成两个子数组就可以满足条件，子数组能拆分成k-i个字数组，k-i就是个数。
 
 ```python3
