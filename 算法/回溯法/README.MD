@@ -7,7 +7,8 @@
     - [3.二进制手表](#3二进制手表)
     - [4.分割回文串](#4分割回文串)
         - [方法1：回溯](#方法1回溯)
-    - [方法2：DP优化](#方法2dp优化)
+        - [方法2：DP优化](#方法2dp优化)
+    - [5.字母组合迭代器](#5字母组合迭代器)
 
 <!-- /TOC -->
 
@@ -179,7 +180,8 @@ print(Solution().readBinaryWatch(2))
 ### 方法1：回溯
 
 > 分析：问题第一眼看上去就像是n中选择k的问题，不同的是此题中的k可能是变化的，也就是说在一次选择的过程中，这个k可能都不同，画出递归树如下：
->![https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg](https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg)
+
+![https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg](https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg)
 
 步骤：  
 1. 从1到n（字符串s的长度）开始截取字符串，判断截取出的字符串是否是回文字符串：
@@ -246,7 +248,7 @@ print(Solution().partition("aab"))
 
 ```
 
-## 方法2：DP优化
+### 方法2：DP优化
 > 时间换空间，将字符串s中的回文子串的状态提前算出来，DP的状态转移方程就是:DP[i][j]为回文，则DP[i-1][j+1]为回文并且s[i]=s[j]（注意临界情况，j-i<=2即子串不可再分）
 
 ```python3
@@ -300,4 +302,56 @@ class Solution:
 print(Solution().partition("aab"))
 
 ```
+
+## 5.字母组合迭代器
+直通车：[https://leetcode-cn.com/problems/iterator-for-combination/](https://leetcode-cn.com/problems/iterator-for-combination/)
+
+```python3
+class CombinationIterator:
+    """
+        其实就是一个n中选k，使用回溯法
+    """
+    def __init__(self, characters: str, combinationLength: int):
+        self.characters = characters
+        self.combinationLength = combinationLength
+        ret = []
+        self.dfs(0, [], ret, len(characters), combinationLength)
+        self.ret = ret
+        self.cur = -1
+
+    def dfs(self, start, path, ret, n, k):
+        if len(path) == k:
+            ret.append("".join(path))
+            return
+
+        for i in range(start, n):
+            path.append(self.characters[i])
+            self.dfs(i + 1, path[:], ret, n, k)
+            path.pop()
+
+    def next(self) -> str:
+        if self.hasNext():
+            self.cur += 1
+            return self.ret[self.cur]
+
+
+    def hasNext(self) -> bool:
+        if self.cur + 1 >= len(self.ret):
+            return False
+        return True
+
+
+# Your CombinationIterator object will be instantiated and called as such:
+# obj = CombinationIterator(characters, combinationLength)
+# param_1 = obj.next()
+# param_2 = obj.hasNext()
+obj = CombinationIterator("abc", 2)
+
+print(obj.next())
+print(obj.next())
+print(obj.next())
+print(obj.next())
+print(obj.next())
+```
+
 
