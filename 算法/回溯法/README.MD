@@ -5,6 +5,9 @@
     - [1.单词搜索](#1单词搜索)
     - [2.组合](#2组合)
     - [3.二进制手表](#3二进制手表)
+    - [4.分割回文串](#4分割回文串)
+        - [方法1：回溯](#方法1回溯)
+    - [方法2：DP优化](#方法2dp优化)
 
 <!-- /TOC -->
 
@@ -170,5 +173,131 @@ class Solution:
 print(Solution().readBinaryWatch(2))
 ```
 
+## 4.分割回文串
+直通车：[https://leetcode-cn.com/problems/palindrome-partitioning/](https://leetcode-cn.com/problems/palindrome-partitioning/)
 
+### 方法1：回溯
+
+> 分析：问题第一眼看上去就像是n中选择k的问题，不同的是此题中的k可能是变化的，也就是说在一次选择的过程中，这个k可能都不同，画出递归树如下：
+>![https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg](https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg)
+
+步骤：  
+1. 从1到n（字符串s的长度）开始截取字符串，判断截取出的字符串是否是回文字符串：
+    - 是回文：执行第2步
+    - 不是回文：直接结束
+2. 对截取后剩下的字符串进行步骤1的操作
+
+```python3
+"""
+需要使用回溯法
+"""
+
+from copy import copy
+from typing import List
+
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        ret = []
+        self.dfs(0, s, [], ret)
+        return ret
+
+    def dfs(self, start, s, path, ret):
+        """
+
+        :param start: 开始截取的位置
+        :param s:  原始字符串
+        :param path: 记录截取路径，保存s的子串
+        :param ret:  最终结果
+        :return:
+        """
+        # 递归终止条件，截取下标等于字符串长度了，说明最终截取就是空了
+        if start == len(s):
+            ret.append(path)
+            return
+
+        # start是开始截取的下标
+        for i in range(start, len(s)):
+            # 不是回文字符串，剪枝
+            if not self.check(s, start, i):
+                continue
+            path.append(s[start:i + 1])
+            self.dfs(i + 1, s, copy(path), ret)
+            path.pop()
+
+    @staticmethod
+    def check(s, start, end):
+        """
+        判断是不是回文字符串
+        :param s: 主字符串
+        :param start: 子串开始下标
+        :param end: 子串结束下标
+        :return:
+        """
+        while start <= end:
+            if s[start] != s[end]:
+                return False
+            start += 1
+            end -= 1
+        return True
+
+
+print(Solution().partition("aab"))
+
+```
+
+## 方法2：DP优化
+> 时间换空间，将字符串s中的回文子串的状态提前算出来，DP的状态转移方程就是:DP[i][j]为回文，则DP[i-1][j+1]为回文并且s[i]=s[j]（注意临界情况，j-i<=2即子串不可再分）
+
+```python3
+from copy import copy
+from typing import List
+
+"""
+动态规划优化
+"""
+
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        # 使用dp将所有回文存储起来dp[i][j]表示s[i:j+1]是否是回文字符串
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+        for right in range(n):
+            for left in range(right + 1):
+                # 左右边界字符相等，并且去掉左右边界的子字符串是回文
+                if s[left] == s[right] and (right - left <= 2 or dp[left + 1][right - 1]):
+                    dp[left][right] = True
+
+        ret = []
+        self.dfs(0, s, [], ret, dp)
+        return ret
+
+    def dfs(self, start, s, path, ret, dp):
+        """
+
+        :param start: 开始截取的位置
+        :param s:  原始字符串
+        :param path: 记录截取路径，保存s的子串
+        :param ret:  最终结果
+        :return:
+        """
+        # 递归终止条件，截取下标等于字符串长度了，说明最终截取就是空了
+        if start == len(s):
+            ret.append(path)
+            return
+
+        # start是开始截取的下标
+        for i in range(start, len(s)):
+            # 不是回文字符串，剪枝
+            if not dp[start][i]:
+                continue
+            path.append(s[start: i + 1])
+            self.dfs(i + 1, s, copy(path), ret, dp)
+            path.pop()
+
+
+print(Solution().partition("aab"))
+
+```
 
