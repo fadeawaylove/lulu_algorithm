@@ -169,3 +169,6 @@ class Solution:
 
 print(Solution().readBinaryWatch(2))
 ```
+
+
+
