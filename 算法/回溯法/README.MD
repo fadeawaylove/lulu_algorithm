@@ -9,6 +9,9 @@
         - [方法1：回溯](#方法1回溯)
         - [方法2：DP优化](#方法2dp优化)
     - [5.字母组合迭代器](#5字母组合迭代器)
+    - [5.开心字符串](#5开心字符串)
+        - [解法1：回溯](#解法1回溯)
+        - [解法2：数学方法](#解法2数学方法)
 
 <!-- /TOC -->
 
@@ -354,4 +357,64 @@ print(obj.next())
 print(obj.next())
 ```
 
+## 5.开心字符串
+直通车：[https://leetcode-cn.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/](https://leetcode-cn.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/)
 
+### 解法1：回溯
+
+```python3
+class Solution:
+    data = ['a', 'b', 'c']
+
+    def getHappyString(self, n: int, k: int) -> str:
+        res = []
+        self.dfs(0,n,[],res, k)
+        if k > len(res):
+            return ""
+        return "".join(res[k-1])
+
+
+    def dfs(self, start, n, path, res, k):
+        if len(path) == n:
+            res.append(path)
+            return
+        
+        for i in self.data:
+            # 剪枝
+            if path and path[-1] == i:
+                continue
+            path.append(i)
+            self.dfs(0, n, path[:], res, k)
+            # 优化，当结果满足k个后，直接返回
+            if len(res) >= k:
+                return
+            path.pop()
+```
+
+### 解法2：数学方法
+
+
+
+```python3
+class Solution:
+    data = ['a', 'b', 'c']
+
+    def getHappyString(self, n: int, k: int) -> str:
+        # 长度超出直接返回
+        if k > 3 * 2**(n - 1):
+            return ""
+        base = {"":["a", "b", "c"], "a": ["b", "c"], "b":["a", "c"], "c":["a", "b"]}
+
+        res = ""
+        k -= 1
+        for i in range(n, 0, -1):
+            x, k = k // 2**(i-1), k % 2**(i-1)
+            if res:
+                res += base[res[-1]][x]
+            else:
+                res = base[res][x]
+        return res
+
+
+print(Solution().getHappyString(3, 9))
+```
