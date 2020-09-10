@@ -9,7 +9,7 @@
         - [方法1：回溯](#方法1回溯)
         - [方法2：DP优化](#方法2dp优化)
     - [5.字母组合迭代器](#5字母组合迭代器)
-    - [5.开心字符串](#5开心字符串)
+    - [6.开心字符串](#6开心字符串)
         - [解法1：回溯](#解法1回溯)
         - [解法2：数学方法](#解法2数学方法)
     - [7.将数组拆分为斐波那契序列](#7将数组拆分为斐波那契序列)
@@ -365,7 +365,7 @@ print(obj.next())
 print(obj.next())
 ```
 
-## 5.开心字符串
+## 6.开心字符串
 直通车：[https://leetcode-cn.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/](https://leetcode-cn.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/)
 
 ### 解法1：回溯
