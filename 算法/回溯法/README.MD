@@ -392,8 +392,9 @@ class Solution:
 ```
 
 ### 解法2：数学方法
+![https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%BC%80%E5%BF%83%E5%AD%97%E7%AC%A6%E4%B8%B2.jpg](https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E5%BC%80%E5%BF%83%E5%AD%97%E7%AC%A6%E4%B8%B2.jpg)
 
-
+> 思路：如上图所示，问题可以转化为求上述满树的第k个元素,这个树满足每个左节点都小于右结点，每个结点的值只能在a,b,c中选取。根据图示的数学特性，当层数等于n的时候，(k-1)//2^(n-1)可以确定属于那一颗子树，重复这个操作就可以找到最终的叶子节点。
 
 ```python3
 class Solution:
