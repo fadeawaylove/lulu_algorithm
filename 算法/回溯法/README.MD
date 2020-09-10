@@ -16,6 +16,9 @@
         - [方法1：回溯法](#方法1回溯法)
         - [方法2：暴力法](#方法2暴力法)
     - [8.08_组合总和 III](#808_组合总和-iii)
+    - [9.串联字符串的最大长度](#9串联字符串的最大长度)
+        - [方法1：回溯](#方法1回溯-1)
+        - [方法2：递归](#方法2递归)
 
 <!-- /TOC -->
 
@@ -510,9 +513,84 @@ print(Solution().combinationSum3(3, 9))
 
 ```
 
+## 9.串联字符串的最大长度
+### 方法1：回溯
+```python3
+from typing import List
 
 
+class Solution:
+    def __init__(self):
+        self.res = 0
 
+    def maxLength(self, arr: List[str]) -> int:
+
+        for i in range(1, len(arr) + 1):
+            self.trace_back(0, [], arr, i)
+        return self.res
+
+    def trace_back(self, start, path, arr, k):
+        # 结束条件
+        if len(path) == k:
+            self.res = max(self.res, len("".join(path)))
+            return
+
+        for i in range(start, len(arr)):
+            if not self.check_single(arr[i]):
+                continue
+            if len(path) >= 1:
+                if not self.check_multiple(path, arr[i]):
+                    continue
+            self.trace_back(i + 1, path + [arr[i]], arr, k)
+
+    def check_multiple(self, origin_str, target_str):
+        origin_str = "".join(origin_str)
+        return self.check_single(origin_str + target_str)
+
+    def check_single(self, a_str):
+        return len(set(a_str)) == len(a_str)
+
+
+# print(Solution().maxLength(["jnfbyktlrqumowxd", "mvhgcpxnjzrdei"]))
+print(Solution().maxLength(["yy","bkhwmpbiisbldzknpm"]))
+
+```
+
+### 方法2：递归
+
+```python3
+from typing import List
+"""
+递归
+"""
+
+
+class Solution:
+    def maxLength(self, arr: List[str]) -> int:
+        # 取出重复的单个字符串
+        arr = [x for x in arr if len(x) == len(set(x))]
+
+        return self.trace_back(0, "", arr)
+
+    def trace_back(self, start, path, arr):
+        # 结束条件
+        if start >= len(arr):
+            return len(path)
+        else:
+            # 如果当前最大字符串path与即将加入的字符串arr[start]不存在重复的
+            # 则取添加和不添加中的较大值
+            if not (set(path) & set(arr[start])):
+                return max(self.trace_back(start + 1, path + arr[start], arr),
+                           self.trace_back(start + 1, path, arr))
+            # 存在重复则直接返回
+            else:
+                return self.trace_back(start + 1, path, arr)
+
+
+print(Solution().maxLength(["jnfbyktlrqumowxd", "mvhgcpxnjzrdei"]))
+# print(Solution().maxLength(["yy","bkhwmpbiisbldzknpm"]))
+
+```
 
 
 
