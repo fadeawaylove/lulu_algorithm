@@ -25,7 +25,6 @@ class CombinationIterator:
             self.cur += 1
             return self.ret[self.cur]
 
-
     def hasNext(self) -> bool:
         if self.cur + 1 >= len(self.ret):
             return False

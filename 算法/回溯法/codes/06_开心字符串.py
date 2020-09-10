@@ -3,17 +3,16 @@ class Solution:
 
     def getHappyString(self, n: int, k: int) -> str:
         res = []
-        self.dfs(0,n,[],res, k)
+        self.dfs(0, n, [], res, k)
         if k > len(res):
             return ""
-        return "".join(res[k-1])
-
+        return "".join(res[k - 1])
 
     def dfs(self, start, n, path, res, k):
         if len(path) == n:
             res.append(path)
             return
-        
+
         for i in self.data:
             # 剪枝
             if path and path[-1] == i:
