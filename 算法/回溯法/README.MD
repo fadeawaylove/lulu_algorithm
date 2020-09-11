@@ -482,6 +482,8 @@ print(Solution().splitIntoFibonacci(
 
 
 ## 8.08_组合总和 III
+直通车：[https://leetcode-cn.com/problems/combination-sum-iii/](https://leetcode-cn.com/problems/combination-sum-iii/)
+
 依然回溯+剪枝
 
 ```python3
@@ -517,6 +519,7 @@ print(Solution().combinationSum3(3, 9))
 ```
 
 ## 9.串联字符串的最大长度
+直通车：[https://leetcode-cn.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/](https://leetcode-cn.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/)
 ### 方法1：回溯
 ```python3
 from typing import List
@@ -597,7 +600,7 @@ print(Solution().maxLength(["jnfbyktlrqumowxd", "mvhgcpxnjzrdei"]))
 
 
 ## 10.组合总数
-
+直通车：[https://leetcode-cn.com/problems/combination-sum/](https://leetcode-cn.com/problems/combination-sum/)
 ```python3
 from typing import List
 
@@ -635,7 +638,7 @@ print(Solution().combinationSum(candidates=[8, 7, 4, 3], target=11))
 
 
 ## 11.有重复字符串的排列组合
-
+直通车：[https://leetcode-cn.com/problems/permutation-ii-lcci/](https://leetcode-cn.com/problems/permutation-ii-lcci/)
 > 使用回溯+hash_map，其实就是n中选n的问题，一般使用回溯都是遍历n，剔除其中重复的情况，此例使用hash_map保存每个元素以及对应的个数，用于path取值和剪枝，提高效率。
 
 ```python3
@@ -677,7 +680,7 @@ print(Solution().permutation("qqe"))
 ```
 
 ## 12.无重复字符串的排列组合
-
+直通车：[https://leetcode-cn.com/problems/permutation-i-lcci/](https://leetcode-cn.com/problems/permutation-i-lcci/)
 > 与有重复字符串的排列组合类似，使用回溯+hash_map，当字符使用过就由True变为False。
 
 ```python3
