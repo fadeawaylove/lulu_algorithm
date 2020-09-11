@@ -21,6 +21,7 @@
         - [方法2：递归](#方法2递归)
     - [10.组合总数](#10组合总数)
     - [11.有重复字符串的排列组合](#11有重复字符串的排列组合)
+    - [12.无重复字符串的排列组合](#12无重复字符串的排列组合)
 
 <!-- /TOC -->
 
@@ -675,5 +676,38 @@ print(Solution().permutation("qqe"))
 # print(Solution().permutation("ab"))
 ```
 
+## 12.无重复字符串的排列组合
 
+> 与有重复字符串的排列组合类似，使用回溯+hash_map，当字符使用过就由True变为False。
+
+```python3
+from typing import List
+
+
+class Solution:
+    def permutation(self, S: str) -> List[str]:
+        hash_map = {}
+        for i, v in enumerate(S):
+            if v not in hash_map:
+                hash_map[v] = True
+        res = []
+        self.trace_back("", res, len(S), S, hash_map)
+        return res
+
+    def trace_back(self, path, res, n, S, hash_map):
+        if len(path) == n:
+            res.append(path)
+            return
+
+        for k in hash_map:
+            if not hash_map[k]:
+                continue
+            hash_map[k] = False
+            self.trace_back(path + k, res, n, S, hash_map)
+            hash_map[k] = True
+
+
+print(Solution().permutation("qwe"))
+print(Solution().permutation("ab"))
+```
 
