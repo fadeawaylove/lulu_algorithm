@@ -20,6 +20,7 @@
         - [方法1：回溯](#方法1回溯-1)
         - [方法2：递归](#方法2递归)
     - [10.组合总数](#10组合总数)
+    - [11.有重复字符串的排列组合](#11有重复字符串的排列组合)
 
 <!-- /TOC -->
 
@@ -632,7 +633,47 @@ print(Solution().combinationSum(candidates=[8, 7, 4, 3], target=11))
 ```
 
 
+## 11.有重复字符串的排列组合
 
+> 使用回溯+hash_map，其实就是n中选n的问题，一般使用回溯都是遍历n，剔除其中重复的情况，此例使用hash_map保存每个元素以及对应的个数，用于path取值和剪枝，提高效率。
+
+```python3
+from typing import List
+"""
+有重复字符串的排列组合。编写一种方法，计算某字符串的所有排列组合。
+"""
+# from copy import copy
+
+
+class Solution:
+    def permutation(self, S: str) -> List[str]:
+        hash_map = {}
+        for i, v in enumerate(S):
+            if v in hash_map:
+                hash_map[v] += 1
+            else:
+                hash_map[v] = 1
+        res = []
+        self.trace_back("", res, len(S), S, hash_map)
+        return res
+
+    def trace_back(self, path, res, n, S, hash_map):
+        if len(path) == n:
+            res.append(path)
+            return
+
+        for k in hash_map:
+            # 减枝
+            if hash_map[k] < 1:
+                continue
+            hash_map[k] -= 1
+            self.trace_back(path + k, res, n, S, hash_map)
+            hash_map[k] += 1
+
+
+print(Solution().permutation("qqe"))
+# print(Solution().permutation("ab"))
+```
 
 
 
