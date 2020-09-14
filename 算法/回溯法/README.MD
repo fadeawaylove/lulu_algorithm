@@ -23,7 +23,7 @@
     - [11.有重复字符串的排列组合](#11有重复字符串的排列组合)
     - [12.无重复字符串的排列组合](#12无重复字符串的排列组合)
     - [13.字符串的排列](#13字符串的排列)
-    - [14.全排列](#14全排列)
+    - [[14.全排列](https://leetcode-cn.com/problems/permutations/)](#14全排列httpsleetcode-cncomproblemspermutations)
         - [方法一：回溯（辅助used列表）](#方法一回溯辅助used列表)
         - [方法二：回溯（交换法）](#方法二回溯交换法)
 
@@ -762,7 +762,7 @@ print(Solution().permutation("abc"))
 ```
 </details>
 
-## 14.全排列
+## [14.全排列](https://leetcode-cn.com/problems/permutations/)
 直通车：[https://leetcode-cn.com/problems/permutations/](https://leetcode-cn.com/problems/permutations/)
 
 ### 方法一：回溯（辅助used列表）
