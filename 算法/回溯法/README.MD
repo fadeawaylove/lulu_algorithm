@@ -23,6 +23,9 @@
     - [11.有重复字符串的排列组合](#11有重复字符串的排列组合)
     - [12.无重复字符串的排列组合](#12无重复字符串的排列组合)
     - [13.字符串的排列](#13字符串的排列)
+    - [14.全排列](#14全排列)
+        - [方法一：回溯（辅助used列表）](#方法一回溯辅助used列表)
+        - [方法二：回溯（交换法）](#方法二回溯交换法)
 
 <!-- /TOC -->
 
@@ -758,4 +761,81 @@ class Solution:
 print(Solution().permutation("abc"))
 ```
 </details>
+
+## 14.全排列
+直通车：[https://leetcode-cn.com/problems/permutations/](https://leetcode-cn.com/problems/permutations/)
+
+### 方法一：回溯（辅助used列表）
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+from typing import List
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        used = [False] * n
+        res = []
+
+        def trace_back(path):
+            if len(path) == n:
+                res.append(path)
+                return
+
+            for i in range(n):
+                if used[i]:
+                    continue
+                used[i] = True
+                trace_back(path + [nums[i]])
+                used[i] = False
+
+        trace_back([])
+        return res
+
+```
+</details>
+
+### 方法二：回溯（交换法）
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+"""
+使用交换法实现回溯，适合全排列场景
+在一层中，first会跟所有range(first,n)范围内的元素都做依次交换，这样正好就展示了当前层的所有情况
+"""
+
+
+class Solution:
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        def backtrack(first=0):
+            # 所有数都填完了
+            if first == n:
+                res.append(nums[:])
+            for i in range(first, n):
+                # 动态维护数组
+                nums[first], nums[i] = nums[i], nums[first]
+                # 继续递归填下一个数
+                backtrack(first + 1)
+                # 撤销操作
+                nums[first], nums[i] = nums[i], nums[first]
+
+        n = len(nums)
+        res = []
+        backtrack()
+        return res
+```
+</details>
+
+
 
