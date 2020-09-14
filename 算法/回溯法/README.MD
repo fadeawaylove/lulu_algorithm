@@ -23,9 +23,12 @@
     - [11.有重复字符串的排列组合](#11有重复字符串的排列组合)
     - [12.无重复字符串的排列组合](#12无重复字符串的排列组合)
     - [13.字符串的排列](#13字符串的排列)
-    - [[14.全排列](https://leetcode-cn.com/problems/permutations/)](#14全排列httpsleetcode-cncomproblemspermutations)
+    - [14.全排列](#14全排列)
         - [方法一：回溯（辅助used列表）](#方法一回溯辅助used列表)
         - [方法二：回溯（交换法）](#方法二回溯交换法)
+    - [15.幂集](#15幂集)
+        - [方法1：回溯](#方法1回溯-2)
+        - [方法2：递推](#方法2递推)
 
 <!-- /TOC -->
 
@@ -762,7 +765,7 @@ print(Solution().permutation("abc"))
 ```
 </details>
 
-## [14.全排列](https://leetcode-cn.com/problems/permutations/)
+## 14.全排列
 直通车：[https://leetcode-cn.com/problems/permutations/](https://leetcode-cn.com/problems/permutations/)
 
 ### 方法一：回溯（辅助used列表）
@@ -836,6 +839,73 @@ class Solution:
         return res
 ```
 </details>
+
+## 15.幂集
+直通车：[https://leetcode-cn.com/problems/power-set-lcci/](https://leetcode-cn.com/problems/power-set-lcci/)
+### 方法1：回溯
+
+<details>
+<summary>回溯</summary>
+
+```python3
+# write your code here.
+from typing import List
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        res = []
+
+        def trace_back(start, path, total):
+            if len(path) == total:
+                res.append(path)
+                return
+            for i in range(start, n):
+                trace_back(i+1, path+[nums[i]], total)
+        
+        for x in range(n+1):
+            trace_back(0, [], x)
+        return res
+```
+</details>
+
+
+### 方法2：递推
+
+<details>
+<summary>递推</summary>
+
+```python3
+# write your code here.
+"""
+输入 0 -->[[]]
+输入 1 -->[[],[1]]
+输入 2 -->[[],[1],[2],[1,2]]
+输入 3 -->[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+可以获得 递推公式： f(n) = f(n-1) + [i+[num] for i in f(n-1)]
+"""
+
+from typing import List
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [
+            [],
+        ]
+        if not nums:
+            return res
+
+        for num in nums:
+            res += [arr + [num] for arr in res]
+        return res
+
+
+print(Solution().subsets([1, 2, 3]))
+
+```
+</details>
+
 
 
 
