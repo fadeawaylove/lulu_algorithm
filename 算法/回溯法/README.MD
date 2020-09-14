@@ -30,7 +30,6 @@
         - [方法1：回溯](#方法1回溯-2)
         - [方法2：递推](#方法2递推)
     - [16.电话号码的字母组合](#16电话号码的字母组合)
-        - [方法1：回溯法（双层）](#方法1回溯法双层)
 
 <!-- /TOC -->
 
@@ -910,9 +909,9 @@ print(Solution().subsets([1, 2, 3]))
 
 
 ## 16.电话号码的字母组合
-直通车：[]()
+直通车：[https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
 
-### 方法1：回溯法（双层）
+![https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88.gif](https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88.gif)
 
 <details>
 <summary>查看代码</summary>
