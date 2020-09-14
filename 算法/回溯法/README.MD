@@ -22,6 +22,7 @@
     - [10.组合总数](#10组合总数)
     - [11.有重复字符串的排列组合](#11有重复字符串的排列组合)
     - [12.无重复字符串的排列组合](#12无重复字符串的排列组合)
+    - [13.字符串的排列](#13字符串的排列)
 
 <!-- /TOC -->
 
@@ -713,4 +714,48 @@ class Solution:
 print(Solution().permutation("qwe"))
 print(Solution().permutation("ab"))
 ```
+
+## 13.字符串的排列
+直通车：[https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
+
+使用回溯法的示意图(不代表本题解体思路，只是为了说明回溯法)
+![https://raw.githubusercontent.com/fadeawaylove/article-images/master/ezgif.com-gif-maker.gif](https://raw.githubusercontent.com/fadeawaylove/article-images/master/ezgif.com-gif-maker.gif)
+
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+from typing import List
+
+
+class Solution:
+    def permutation(self, s: str) -> List[str]:
+        n = len(s)
+        visited = [False] * n  # 记录是否被访问的状态
+        res = []
+
+        def trace_back(path):
+            if len(path) == n:
+                res.append(path)
+                return
+            dic = set()  # 记录同一层中已经使用过的元素
+            for i in range(n):  # 一个循环代表一层
+                if visited[i]:  # 访问过就剔除
+                    continue
+                if s[i] in dic:  # 同一层不允许有重复的元素
+                    continue
+                dic.add(s[i])
+                visited[i] = True
+                trace_back(path + s[i])
+                visited[i] = False
+
+        trace_back("")
+        return res
+
+
+print(Solution().permutation("abc"))
+```
+</details>
 

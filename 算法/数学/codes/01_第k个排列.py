@@ -37,3 +37,4 @@ class Solution:
 print(Solution().getPermutation(4, 9))
 print(Solution().getPermutation(9, 296662))
 print(Solution().getPermutation(3, 1))
+
