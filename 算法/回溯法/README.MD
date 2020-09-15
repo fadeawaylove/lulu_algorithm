@@ -31,6 +31,8 @@
         - [方法2：递推](#方法2递推)
     - [16.电话号码的字母组合](#16电话号码的字母组合)
     - [17.子集Ⅱ](#17子集ⅱ)
+        - [方法1：回溯法](#方法1回溯法-1)
+        - [方法2：递推法](#方法2递推法)
 
 <!-- /TOC -->
 
@@ -959,5 +961,91 @@ print(Solution().letterCombinations("23"))
 
 
 ## 17.子集Ⅱ
+直通车：[https://leetcode-cn.com/problems/subsets-ii/](https://leetcode-cn.com/problems/subsets-ii/)
+> 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+> 
+> 说明：解集不能包含重复的子集。
+> 
+> 示例:
+>
+> 输入: [1,2,2]
+> 输出:
+> [
+>   [2],
+>   [1],
+>   [1,2,2],
+>   [2,2],
+>   [1,2],
+>   []
+> ]
+>
+> 来源：力扣（LeetCode）
+> 链接：https://leetcode-cn.com/problems/subsets-ii
+> 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
-[子集](codes/17_子集II.py)
+
+### 方法1：回溯法
+> 其实就是转换为n中选择0到n的问题
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+from typing import List
+
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        nums = sorted(nums)
+        res = []
+
+        def trace_back(start, path, total):
+            if len(path) == total:
+                res.append(path)
+                return
+            for i in range(start, n):
+                # 只需判断是否和上一个数字相同
+                if nums[i] == nums[i-1] and i > start:
+                    continue
+                trace_back(i + 1, path + [nums[i]], total)
+
+        for x in range(n + 1):
+            trace_back(0, [], x)
+        return res
+```
+</details>
+
+### 方法2：递推法
+
+![https://raw.githubusercontent.com/fadeawaylove/article-images/master/87ba90075a0a54e867ee05a65612d6f00766624c9f50f92beb9004e8b5a3ff27-image.png](https://raw.githubusercontent.com/fadeawaylove/article-images/master/87ba90075a0a54e867ee05a65612d6f00766624c9f50f92beb9004e8b5a3ff27-image.png)
+
+> 可以梳理出当前结果和上一个结果之间的关系，f(n) = f(n-1) + (i+[n] for i in f(n-1))，这个式子无法排除重复部分的，但是观察可以得到，重复的都是因为使用了“旧解”，比如上图中，第四行黑色部分重复了，就是因为用了2和第三行绿色部分生成的，如果每次能标记处“旧解”，生成新的下一项解的时候排除掉“旧解”就行了
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        nums = sorted(nums)
+        res = [[]]
+        start = 0
+        for i in range(n):
+            temp = []
+            for j in range(len(res)):
+                if i > 0 and nums[i] == nums[i - 1] and j <= start:
+                    continue
+                temp.append(res[j] + [nums[i]])
+            start = len(res) - 1
+            res.extend(temp)
+        return res
+
+
+print(Solution().subsetsWithDup([4, 4, 4, 1, 4]))
+```
+</details>
+
