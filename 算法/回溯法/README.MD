@@ -35,6 +35,7 @@
         - [方法2：递推法](#方法2递推法)
     - [18.复原IP地址](#18复原ip地址)
     - [19.全排列 II](#19全排列-ii)
+    - [20.优美的排列](#20优美的排列)
 
 <!-- /TOC -->
 
@@ -1177,3 +1178,92 @@ class Solution:
 ```
 </details>
 
+## 20.优美的排列
+
+> 假设有从 1 到 N 的 N 个整数，如果从这 N 个数字中成功构造出一个数组，使得数组的第 i 位 (1 <= i <= N) 满足如下两个条件中的一个，我们就称这个数组为一个优美的排列。条件：
+>
+> 
+>
+> 第 i 位的数字能被 i 整除
+>
+> i 能被第 i 位上的数字整除
+>
+> 现在给定一个整数 N，请问可以构造多少个优美的排列？
+>
+> 
+>
+> 示例1:
+>
+> 
+>
+> 输入: 2
+>
+> 输出: 2
+>
+> 解释:
+>
+> 
+>
+> 第 1 个优美的排列是 [1, 2]:
+>
+>   第 1 个位置（i=1）上的数字是1，1能被 i（i=1）整除
+>
+>   第 2 个位置（i=2）上的数字是2，2能被 i（i=2）整除
+>
+> 
+>
+> 第 2 个优美的排列是 [2, 1]:
+>
+>   第 1 个位置（i=1）上的数字是2，2能被 i（i=1）整除
+>
+>   第 2 个位置（i=2）上的数字是1，i（i=2）能被 1 整除
+>
+> 说明:
+>
+> 
+>
+> N 是一个正整数，并且不会超过15。
+>
+> 
+>
+> 来源：力扣（LeetCode）
+>
+> 链接：https://leetcode-cn.com/problems/beautiful-arrangement
+>
+> 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+class Solution:
+    def countArrangement(self, N: int) -> int:
+        res = []
+        visited = [False] * N
+
+        def dfs(path):
+            if len(path) == N:
+                res.append(path)
+                return
+            for i in range(1, N + 1):
+                if visited[i - 1]:
+                    continue
+                # 剪枝
+                index = len(path)+1
+                if i % index and index % i:
+                    continue
+                visited[i - 1] = True
+                dfs(path + [i])
+                visited[i - 1] = False
+
+        dfs([])
+        return len(res)
+
+
+print(Solution().countArrangement(2))
+print(Solution().countArrangement(3))
+
+```
+</details>
