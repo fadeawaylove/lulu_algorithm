@@ -8,6 +8,7 @@
     - [3.最长上升子序列](#3最长上升子序列)
         - [方法1：动态规划](#方法1动态规划-1)
         - [方法2：贪心算法+二分法](#方法2贪心算法二分法)
+    - [4.新21点](#4新21点)
 
 <!-- /TOC -->
 
@@ -236,3 +237,51 @@ class Solution:
 ```
 </details>
     
+
+## 4.新21点
+直通车：[https://leetcode-cn.com/problems/new-21-game/](https://leetcode-cn.com/problems/new-21-game/)
+![https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200919160742.png](https://raw.githubusercontent.com/fadeawaylove/article-images/master/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200919160742.png)
+
+解题思路：
+> 我们以N=21, K=17, W=10为例，dp[i]保存点数i赢得游戏的概率，可以得到状态转移方程：  
+> dp[i] = (dp[i+1] + dp[i+2] + ... + dp[i+W]) / W   
+> 这个方程的意思就是：如果当前数字为i，那么下一个数字的范围就是i+1到i+W，且得到下一个数字的概率都相等，那么下一个数字获胜的概率累加最后除以W就是数字i获胜的概率了   
+> 特殊情况：当i=K-1的时候，下一个数最大是K-1+W如果此时K-1+W<=N，那么此时游戏获胜的概率就是1，因为其它任何情况游戏结束时i都不会大于K-1+W.
+
+示意图：    
+当`N=10,W=10,K=1`时获胜几率为1.0：
+![](https://raw.githubusercontent.com/fadeawaylove/article-images/master/d588e3672d6bda09e7da0a921ad3ff850159c2b397273e887ae0386bdaa93e75-image.png)
+
+当`N=21,W=10,K=17`时获胜几率如下：
+![](https://raw.githubusercontent.com/fadeawaylove/article-images/master/36e85e12bcff01cf2a7d2e5d3a1bed1d64b069e7fed94e28354c85f85060d655-image.png)
+
+根据上述思路，逆序求解获胜概率代码如下：
+
+<details>
+<summary>查看代码</summary>
+
+```python3
+# write your code here.
+class Solution:
+    def new21Game(self, N: int, K: int, W: int) -> float:
+        # 也就是说当前点数为K-1的时候，下一个点数最多为K-1+W，如果K-1+W<=N，那么永远不会输
+        if K + W - 1 <= N:
+            return 1.0
+
+        dp = [0] * (K + W)
+        # 有些点数的概率已知
+        for i in range(K, N + 1):
+            dp[i] = 1
+
+        sum_pro = N - K + 1
+        # 计算K+W这几个数的概率和
+        for i in range(K - 1, -1, -1):
+            dp[i] = sum_pro / W
+            sum_pro = sum_pro + dp[i] - dp[i + W]
+        return dp[0]
+
+
+print(Solution().new21Game(21, 17, 10))
+```
+</details>
+
