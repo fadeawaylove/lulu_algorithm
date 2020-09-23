@@ -1,7 +1,7 @@
 from typing import List
 """
-如果 A[i-1] > A[i-2] and A[i] < A[i-1] 
-dp[i] = dp[i] + 1 
+如果 A[i-1] > A[i-2] and A[i] < A[i-1]
+dp[i] = dp[i] + 1
 """
 
 
@@ -16,9 +16,11 @@ class Solution:
             if i == 1:
                 dp[i] = 1 if A[0] == A[1] else 2
             if i > 1:
-                if (A[i] > A[i-1] and A[i-1] < A[i-2]) or (A[i] < A[i-1] and A[i-1] > A[i-2]):
+                if (A[i] > A[i - 1]
+                        and A[i - 1] < A[i - 2]) or (A[i] < A[i - 1]
+                                                     and A[i - 1] > A[i - 2]):
                     dp[i] = dp[i - 1] + 1
-                elif A[i] == A[i-1]:
+                elif A[i] == A[i - 1]:
                     dp[i] = 1
                 else:
                     dp[i] = 2

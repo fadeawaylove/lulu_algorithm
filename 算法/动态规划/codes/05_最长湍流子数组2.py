@@ -1,7 +1,7 @@
 from typing import List
 """
-如果 A[i-1] > A[i-2] and A[i] < A[i-1] 
-dp[i] = dp[i] + 1 
+如果 A[i-1] > A[i-2] and A[i] < A[i-1]
+dp[i] = dp[i] + 1
 """
 
 
@@ -39,6 +39,6 @@ class Solution:
         return a > b
 
 
-print(Solution().maxTurbulenceSize([9, 4, 2, 10, 7, 8, 8, 1, 9]))
+print(Solution().maxTurbulenceSize([0, 8, 45, 88, 48, 68, 28, 55, 17, 24]))
 print(Solution().maxTurbulenceSize(
     [250, 50, 219, 258, 199, 79, 36, 218, 218, 248]))
